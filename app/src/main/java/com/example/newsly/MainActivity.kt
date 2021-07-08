@@ -1,5 +1,6 @@
 package com.example.newsly
 
+import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -8,7 +9,6 @@ import android.view.View
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.littlemango.stacklayoutmanager.StackLayoutManager
 import kotlinx.android.synthetic.main.activity_main.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -29,21 +29,12 @@ class MainActivity : AppCompatActivity() {
         adapter = NewsAdapter(this@MainActivity, articles)
         rvNewsList.adapter = adapter
         val layoutManager = LinearLayoutManager(this@MainActivity)
-//        if(totalResult > layoutManager.itemCount && layoutManager.findFirstVisibleItemPosition() >= layoutManager.itemCount-5) {
-//            pageNum++
-//            getNews()
-//        }
         rvNewsList.layoutManager = layoutManager
 
-//        val layoutManager = StackLayoutManager(StackLayoutManager.ScrollOrientation.RIGHT_TO_LEFT)
-//        layoutManager.setPagerMode(true)
-//        layoutManager.setPagerFlingVelocity(3000)
-//        layoutManager.setItemChangedListener(object: StackLayoutManager.ItemChangedListener{
-//            override fun onItemChanged(position: Int) {
-//                clMain.setBackgroundColor(Color.parseColor(ColorPicker.getColor()))
-//            }
-//        })
-//        rvNewsList.layoutManager = layoutManager
+        fabRefresh.setOnClickListener {
+            pbProgress.visibility = View.VISIBLE
+            getNews()
+        }
 
         getNews()
         pbProgress.visibility = View.VISIBLE
